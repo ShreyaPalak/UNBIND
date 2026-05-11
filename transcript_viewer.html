@@ -7,8 +7,27 @@
     <link rel="stylesheet" href="style.css">
     <script src="data.js"></script>
     <style>
+:root {
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    --font-mono: 'Menlo', 'Monaco', 'Courier New', monospace;
+    --color-text-primary: #1a1a1a;
+    --color-text-secondary: #666666;
+    --color-text-tertiary: #999999;
+    --color-text-info: #0066cc;
+    --color-text-success: #22863a;
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f5f5f5;
+    --color-background-info: #e8f1ff;
+    --color-border-primary: #e0e0e0;
+    --color-border-secondary: #d0d0d0;
+    --color-border-tertiary: #cccccc;
+    --color-border-info: #0066cc;
+    --border-radius-lg: 12px;
+    --border-radius-md: 8px;
+}
+
         * { box-sizing: border-box; }
-        body { font-family: var(--font-sans); }
+        body { font-family: var(--font-sans); margin: 0; padding: 0; background: #fafafa; }
         .transcript-container { max-width: 680px; margin: 0 auto; padding: 2rem 1rem; }
         .player-section { 
           background: var(--color-background-secondary);
