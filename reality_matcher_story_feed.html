@@ -1,0 +1,327 @@
+<style>
+* { box-sizing: border-box; }
+body { font-family: var(--font-sans); }
+.feed-container { max-width: 680px; margin: 0 auto; padding: 0; }
+.story-card { 
+  background: var(--color-background-primary); 
+  border: 0.5px solid var(--color-border-tertiary); 
+  border-radius: var(--border-radius-lg); 
+  padding: 0;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.story-card:hover { border-color: var(--color-border-secondary); }
+.story-header { 
+  padding: 1.25rem; 
+  border-bottom: 0.5px solid var(--color-border-tertiary); 
+  background: var(--color-background-secondary);
+}
+.story-badge {
+  display: inline-block;
+  background: var(--color-background-info);
+  color: var(--color-text-info);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: var(--border-radius-md);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+.story-title { 
+  font-size: 18px; 
+  font-weight: 500; 
+  color: var(--color-text-primary);
+  margin: 0;
+}
+.story-subtitle {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin: 6px 0 0 0;
+}
+.story-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  margin-top: 8px;
+}
+.story-body { padding: 1.25rem; }
+.story-excerpt {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  margin: 0 0 1rem;
+}
+.story-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin: 1rem 0;
+}
+.stat {
+  background: var(--color-background-secondary);
+  padding: 12px;
+  border-radius: var(--border-radius-md);
+  text-align: center;
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+.stat-value {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+.match-score {
+  background: var(--color-background-success);
+  color: var(--color-text-success);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: var(--border-radius-md);
+  display: inline-block;
+  margin-bottom: 8px;
+}
+.themes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 1rem 0;
+}
+.theme-tag {
+  background: var(--color-background-info);
+  color: var(--color-text-info);
+  padding: 4px 10px;
+  border-radius: var(--border-radius-md);
+  font-size: 12px;
+}
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+.button {
+  flex: 1;
+  background: transparent;
+  border: 0.5px solid var(--color-border-secondary);
+  color: var(--color-text-primary);
+  padding: 10px;
+  border-radius: var(--border-radius-md);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.button:hover { background: var(--color-background-secondary); }
+.button-primary {
+  border-color: var(--color-border-info);
+  color: var(--color-text-info);
+  background: var(--color-background-info);
+}
+.button-primary:hover { opacity: 0.85; }
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.filter-tag {
+  background: var(--color-background-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: var(--color-text-primary);
+}
+.filter-tag.active { 
+  background: var(--color-background-info); 
+  border-color: var(--color-border-info);
+  color: var(--color-text-info);
+}
+.header-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+}
+.header-title { font-size: 18px; font-weight: 500; margin: 0 0 6px; }
+.header-subtitle { font-size: 13px; color: var(--color-text-secondary); margin: 0; }
+.match-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--color-text-success);
+  font-weight: 500;
+}
+.dot { width: 6px; height: 6px; background: var(--color-text-success); border-radius: 50%; }
+</style>
+
+<div class="feed-container">
+  <div class="header-section">
+    <h2 class="header-title">Mentors who also failed UPSC (like you)</h2>
+    <p class="header-subtitle">These stories match your stage and show what came after</p>
+  </div>
+
+  <!-- STORY 1 -->
+  <div class="story-card">
+    <div class="story-header">
+      <div style="margin-bottom: 8px;">
+        <span class="story-badge">Archive B: Integration</span>
+        <span class="match-indicator" style="float: right;"><span class="dot"></span> Exact match</span>
+      </div>
+      <h3 class="story-title">I failed the interview 4 times. Then I stopped preparing.</h3>
+      <p class="story-subtitle">Akshay · Failed 2019-2023 · Interview stage</p>
+      <div class="story-meta">
+        <span><i class="ti ti-clock" style="font-size: 12px; margin-right: 2px;" aria-hidden="true"></i>18 min listen</span>
+        <span><i class="ti ti-heart" style="font-size: 12px; margin-right: 2px;" aria-hidden="true"></i>284 matched my reality</span>
+      </div>
+    </div>
+    
+    <div class="story-body">
+      <p class="story-excerpt">
+        "I cleared mains three times. Made it to the interview three times. And three times they didn't pick me. By the fourth attempt, I realized: the problem isn't my prep anymore. The problem is I'm addicted to proving something to people who will never believe me anyway."
+      </p>
+
+      <div class="story-stats">
+        <div class="stat">
+          <div class="stat-label">Attempts</div>
+          <div class="stat-value">4</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Years spent</div>
+          <div class="stat-value">4</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Now (5y later)</div>
+          <div class="stat-value">Happy</div>
+        </div>
+      </div>
+
+      <div class="themes">
+        <span class="theme-tag">Identity crisis</span>
+        <span class="theme-tag">Family pressure</span>
+        <span class="theme-tag">Knowing when to stop</span>
+        <span class="theme-tag">Finding peace</span>
+      </div>
+
+      <div class="action-buttons">
+        <button class="button" onclick="window.location.href='transcript_viewer.html?id=akshay'">Read transcript</button>
+        <button class="button button-primary" onclick="window.location.href='qa_viewer.html?id=akshay'">Ask a question</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STORY 2 -->
+  <div class="story-card">
+    <div class="story-header">
+      <div style="margin-bottom: 8px;">
+        <span class="story-badge">Archive B: Integration</span>
+        <span class="match-indicator" style="float: right;"><span class="dot"></span> Similar stage</span>
+      </div>
+      <h3 class="story-title">I failed mains twice, then found a different kind of power</h3>
+      <p class="story-subtitle">Priya · Failed 2020-2022 · Mains stage</p>
+      <div class="story-meta">
+        <span><i class="ti ti-clock" style="font-size: 12px; margin-right: 2px;" aria-hidden="true"></i>14 min listen</span>
+        <span><i class="ti ti-heart" style="font-size: 12px; margin-right: 2px;" aria-hidden="true"></i>156 matched my reality</span>
+      </div>
+    </div>
+    
+    <div class="story-body">
+      <p class="story-excerpt">
+        "The irony: I wanted the IAS to have power. To make decisions. To help people. I thought that only happened in government. But I'm making bigger decisions now in the nonprofit space than most IAS officers ever will."
+      </p>
+
+      <div class="story-stats">
+        <div class="stat">
+          <div class="stat-label">Attempts</div>
+          <div class="stat-value">2</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Years spent</div>
+          <div class="stat-value">2</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Now (3y later)</div>
+          <div class="stat-value">Leading</div>
+        </div>
+      </div>
+
+      <div class="themes">
+        <span class="theme-tag">Redefining success</span>
+        <span class="theme-tag">Finding agency</span>
+        <span class="theme-tag">Civic contribution</span>
+      </div>
+
+      <div class="action-buttons">
+        <button class="button" onclick="window.location.href='transcript_viewer.html?id=priya'">Read transcript</button>
+        <button class="button button-primary" onclick="window.location.href='qa_viewer.html?id=priya'">Ask a question</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STORY 3 -->
+  <div class="story-card">
+    <div class="story-header">
+      <div style="margin-bottom: 8px;">
+        <span class="story-badge">Archive B: Integration</span>
+        <span class="match-indicator" style="float: right;"><span class="dot"></span> Your exact story</span>
+      </div>
+      <h3 class="story-title">Third attempt. Same result. Here's what changed in my head.</h3>
+      <p class="story-subtitle">Rohan · Failed 2021-2024 · Interview stage</p>
+      <div class="story-meta">
+        <span><i class="ti ti-clock" style="font-size: 12px; margin-right: 2px;" aria-hidden="true"></i>22 min listen</span>
+        <span><i class="ti ti-heart" style="font-size: 12px; margin-right: 2px;" aria-hidden="true"></i>412 matched my reality</span>
+      </div>
+    </div>
+    
+    <div class="story-body">
+      <p class="story-excerpt">
+        "People ask: 'Why didn't you try a fourth time?' The truth is simpler than they want. I realized that every study session was me saying 'I'm not good enough.' And I got tired of telling myself that. Not because I suddenly became confident. But because I got bored of being a victim of the UPSC."
+      </p>
+
+      <div class="story-stats">
+        <div class="stat">
+          <div class="stat-label">Attempts</div>
+          <div class="stat-value">3</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Years spent</div>
+          <div class="stat-value">5</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Now (6mo later)</div>
+          <div class="stat-value">Still figuring</div>
+        </div>
+      </div>
+
+      <div class="themes">
+        <span class="theme-tag">Knowing when to stop</span>
+        <span class="theme-tag">Self-worth</span>
+        <span class="theme-tag">What happens after</span>
+        <span class="theme-tag">Finding yourself again</span>
+      </div>
+
+      <div class="action-buttons">
+        <button class="button" onclick="window.location.href='transcript_viewer.html?id=rohan'">Read transcript</button>
+        <button class="button button-primary" onclick="window.location.href='qa_viewer.html?id=rohan'">Ask a question</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div style="padding: 1.5rem; background: var(--color-background-secondary); border-radius: var(--border-radius-lg); text-align: center;">
+    <p style="font-size: 14px; color: var(--color-text-primary); margin: 0;">
+      These mentors are real people. They're not coaches or consultants. They're people who tried what you tried and lived through the aftermath.
+    </p>
+    <p style="font-size: 12px; color: var(--color-text-secondary); margin: 12px 0 0;">
+      You can ask them anything. They respond when they have time.
+    </p>
+  </div>
+</div>
+

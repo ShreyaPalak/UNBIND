@@ -1,0 +1,200 @@
+<style>
+body { font-family: var(--font-sans); }
+.container { max-width: 680px; margin: 0 auto; padding: 0; }
+.card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.5rem; margin-bottom: 1.5rem; }
+.card-title { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 0.5rem; }
+.card-subtitle { font-size: 13px; color: var(--color-text-secondary); margin: 0 0 1rem; }
+.input-group { margin-bottom: 1rem; }
+.label { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 6px; display: block; }
+input[type="text"], input[type="number"], textarea { width: 100%; }
+textarea { min-height: 80px; resize: vertical; font-family: var(--font-sans); }
+.timeline { position: relative; margin: 1.5rem 0; }
+.timeline-item { margin-bottom: 1.5rem; padding-left: 24px; position: relative; }
+.timeline-marker { position: absolute; left: 0; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: var(--color-background-info); border: 2px solid var(--color-border-info); }
+.timeline-label { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+.timeline-content { font-size: 14px; color: var(--color-text-primary); margin-top: 4px; }
+.split-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.metric { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 12px; }
+.metric-label { font-size: 11px; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.metric-value { font-size: 20px; font-weight: 500; color: var(--color-text-primary); }
+.insight-box { background: var(--color-background-info); color: var(--color-text-info); padding: 12px; border-radius: var(--border-radius-md); font-size: 13px; line-height: 1.6; margin: 1rem 0; }
+.button { background: transparent; border: 0.5px solid var(--color-border-secondary); color: var(--color-text-primary); padding: 8px 12px; border-radius: var(--border-radius-md); font-size: 13px; cursor: pointer; transition: background 0.15s; }
+.button:hover { background: var(--color-background-secondary); }
+.button-primary { border-color: var(--color-border-info); color: var(--color-text-info); }
+.button-primary:hover { background: var(--color-background-info); }
+.hidden { display: none; }
+.step { margin-bottom: 2rem; }
+.step.hidden { display: none; }
+.result-card { border: 2px solid var(--color-border-info); background: var(--color-background-primary); }
+</style>
+
+<div class="container">
+  <div id="step1" class="step">
+    <div class="card">
+      <h2 class="card-title">First, let's untangle what happened</h2>
+      <p class="card-subtitle">You've spent years preparing. Let's separate the attempt from the identity.</p>
+      
+      <div class="input-group">
+        <label class="label">How many times have you attempted UPSC?</label>
+        <input type="number" id="attempts" min="1" value="3" />
+      </div>
+
+      <div class="split-row">
+        <div class="input-group">
+          <label class="label">Over how many years?</label>
+          <input type="number" id="years" min="1" value="5" />
+        </div>
+        <div class="input-group">
+          <label class="label">How much money spent?</label>
+          <input type="text" id="money" placeholder="₹5,00,000" />
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="label">Where did you fail this time?</label>
+        <select id="stage" style="width: 100%;">
+          <option value="">Select...</option>
+          <option value="prelims">Prelims (didn't clear cutoff)</option>
+          <option value="mains">Mains (cleared prelims, failed mains)</option>
+          <option value="interview">Interview (cleared mains, failed interview)</option>
+        </select>
+      </div>
+
+      <button class="button button-primary" onclick="goToStep(2)">Next</button>
+    </div>
+  </div>
+
+  <div id="step2" class="step hidden">
+    <div class="card">
+      <h2 class="card-title">Now, let's identify what stayed true</h2>
+      <p class="card-subtitle">The UPSC didn't work. But what about the person who tried?</p>
+
+      <div class="input-group">
+        <label class="label">What skills did you actually develop? (circle all that apply)</label>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px;">
+            <input type="checkbox" id="skill_analysis" /> Analytical thinking
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px;">
+            <input type="checkbox" id="skill_writing" /> Writing clearly
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px;">
+            <input type="checkbox" id="skill_discipline" /> Self-discipline
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px;">
+            <input type="checkbox" id="skill_research" /> Research skills
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px;">
+            <input type="checkbox" id="skill_resilience" /> Resilience
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px;">
+            <input type="checkbox" id="skill_strategy" /> Strategic planning
+          </label>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="label">What did you *actually* want about the IAS? (not what you think you should want)</label>
+        <textarea id="wanted" placeholder="e.g., Power? Respect? Job security? To help people? To prove yourself?"></textarea>
+      </div>
+
+      <button class="button button-primary" onclick="goToStep(3)">Next</button>
+    </div>
+  </div>
+
+  <div id="step3" class="step hidden">
+    <div class="card result-card">
+      <h2 class="card-title">What we learned</h2>
+      <p class="card-subtitle">The UPSC failed. You didn't.</p>
+
+      <div style="margin: 1.5rem 0;">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-label">The sunk investment</div>
+            <div class="timeline-content" id="result-investment"></div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-label">What this was actually about</div>
+            <div class="timeline-content" id="result-actually"></div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-label">What you built (and kept)</div>
+            <div class="timeline-content" id="result-skills"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight-box">
+        <strong>Here's the thing:</strong> You spent <span id="result-years">5</span> years chasing a single outcome. The outcome didn't happen. But the person who spent those <span id="result-years2">5</span> years *exists*. They have skills. They have stamina. They have a reason they wanted this (even if the reason isn't the IAS anymore).
+      </div>
+
+      <div class="split-row" style="margin-top: 1.5rem;">
+        <div class="metric">
+          <div class="metric-label">Attempts</div>
+          <div class="metric-value" id="metric-attempts">3</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Skills developed</div>
+          <div class="metric-value" id="metric-skills">0</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 0.5px solid var(--color-border-tertiary);">
+        <p style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 1rem;">What would help right now?</p>
+        <button class="button" onclick="window.location.href='reality_matcher_story_feed.html'">Talk to someone who failed (like you)</button>
+        <button class="button" style="display: block; width: 100%; margin-top: 8px;" onclick="sendPrompt('Show me what happened in others\' careers after UPSC failure ↗')">See other paths forward</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function goToStep(n) {
+  if (n === 2) {
+    document.getElementById('step1').classList.add('hidden');
+    document.getElementById('step2').classList.remove('hidden');
+  } else if (n === 3) {
+    const attempts = document.getElementById('attempts').value || '3';
+    const years = document.getElementById('years').value || '5';
+    const money = document.getElementById('money').value || '₹5,00,000';
+    const stage = document.getElementById('stage').value || 'interview';
+    const wanted = document.getElementById('wanted').value || 'something meaningful';
+    
+    const skills = [];
+    if (document.getElementById('skill_analysis').checked) skills.push('analyzing information');
+    if (document.getElementById('skill_writing').checked) skills.push('writing clearly');
+    if (document.getElementById('skill_discipline').checked) skills.push('showing up every day');
+    if (document.getElementById('skill_research').checked) skills.push('researching deeply');
+    if (document.getElementById('skill_resilience').checked) skills.push('staying resilient after losses');
+    if (document.getElementById('skill_strategy').checked) skills.push('planning strategically');
+    
+    const skillCount = skills.length;
+
+    document.getElementById('result-investment').textContent = `${attempts} attempts, ${years} years, ${money} spent. That's real.`;
+    
+    const stageText = {
+      'prelims': 'clearing the gates',
+      'mains': 'proving you belonged in the room',
+      'interview': 'proving you could lead'
+    }[stage] || 'achieving the dream';
+    
+    document.getElementById('result-actually').textContent = `You wanted ${wanted}. And the IAS was how you thought you'd get it. That's honest. Most people won't admit that part.`;
+    
+    document.getElementById('result-skills').textContent = skillCount > 0 ? `You developed real skills: ${skills.join(', ')}. These don't disappear because one exam didn't work out.` : 'You learned how to persist. That matters.';
+    
+    document.getElementById('result-years').textContent = years;
+    document.getElementById('result-years2').textContent = years;
+    document.getElementById('metric-attempts').textContent = attempts;
+    document.getElementById('metric-skills').textContent = skillCount || '5+';
+    
+    document.getElementById('step2').classList.add('hidden');
+    document.getElementById('step3').classList.remove('hidden');
+    window.scrollTo(0, 0);
+  }
+}
+</script>

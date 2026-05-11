@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A Thread | The Unbinding</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="data.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: var(--font-sans); }
+        .qa-container { max-width: 680px; margin: 0 auto; padding: 2rem 1rem; }
+        .story-reference {
+          background: var(--color-background-secondary);
+          border: 0.5px solid var(--color-border-tertiary);
+          border-radius: var(--border-radius-lg);
+          padding: 1.25rem;
+          margin-bottom: 1.5rem;
+        }
+        .ref-title {
+          font-size: 14px;
+          font-weight: 500;
+          color: var(--color-text-primary);
+          margin: 0 0 4px;
+        }
+        .ref-subtitle {
+          font-size: 12px;
+          color: var(--color-text-secondary);
+          margin: 0;
+        }
+        .qa-thread {
+          margin-bottom: 1.5rem;
+        }
+        .qa-message {
+          background: var(--color-background-primary);
+          border: 0.5px solid var(--color-border-tertiary);
+          border-radius: var(--border-radius-lg);
+          padding: 1.25rem;
+          margin-bottom: 12px;
+        }
+        .qa-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 12px;
+          padding-bottom: 12px;
+          border-bottom: 0.5px solid var(--color-border-tertiary);
+        }
+        .qa-author {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .qa-avatar {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          background: var(--color-background-info);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 12px;
+          font-weight: 600;
+          color: var(--color-text-info);
+        }
+        .qa-name {
+          font-size: 13px;
+          font-weight: 500;
+          color: var(--color-text-primary);
+        }
+        .qa-role {
+          font-size: 11px;
+          color: var(--color-text-secondary);
+        }
+        .qa-time {
+          font-size: 11px;
+          color: var(--color-text-tertiary);
+        }
+        .qa-text {
+          font-size: 14px;
+          line-height: 1.7;
+          color: var(--color-text-primary);
+        }
+        .qa-actions {
+          display: flex;
+          gap: 12px;
+          margin-top: 12px;
+          padding-top: 12px;
+          border-top: 0.5px solid var(--color-border-tertiary);
+        }
+        .qa-action-btn {
+          background: transparent;
+          border: 0.5px solid var(--color-border-tertiary);
+          color: var(--color-text-secondary);
+          padding: 6px 12px;
+          border-radius: var(--border-radius-md);
+          font-size: 12px;
+          cursor: pointer;
+          transition: all 0.15s;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+        .qa-action-btn:hover {
+          border-color: var(--color-border-secondary);
+          color: var(--color-text-primary);
+        }
+        .qa-question {
+          background: var(--color-background-info);
+          border-left: 3px solid var(--color-border-info);
+        }
+        .qa-answer {
+          background: var(--color-background-primary);
+          margin-left: 24px;
+        }
+        .mentor-badge {
+          background: var(--color-background-success);
+          color: var(--color-text-success);
+          font-size: 10px;
+          padding: 2px 6px;
+          border-radius: 3px;
+          text-transform: uppercase;
+          font-weight: 600;
+          margin-left: 4px;
+        }
+        .payment-badge {
+          background: var(--color-background-warning);
+          color: var(--color-text-warning);
+          font-size: 10px;
+          padding: 2px 6px;
+          border-radius: 3px;
+        }
+        .new-question-section {
+          background: var(--color-background-secondary);
+          border: 0.5px solid var(--color-border-tertiary);
+          border-radius: var(--border-radius-lg);
+          padding: 1.5rem;
+          margin-top: 2rem;
+        }
+        .new-q-title {
+          font-size: 14px;
+          font-weight: 500;
+          margin: 0 0 1rem;
+        }
+        .new-q-input {
+          width: 100%;
+          min-height: 100px;
+          padding: 12px;
+          border: 0.5px solid var(--color-border-tertiary);
+          border-radius: var(--border-radius-md);
+          font-family: var(--font-sans);
+          font-size: 13px;
+          resize: vertical;
+        }
+        .new-q-submit {
+          background: transparent;
+          border: 0.5px solid var(--color-border-secondary);
+          color: var(--color-text-primary);
+          padding: 10px 16px;
+          border-radius: var(--border-radius-md);
+          font-size: 13px;
+          cursor: pointer;
+          margin-top: 12px;
+          transition: all 0.15s;
+        }
+        .new-q-submit:hover {
+          background: var(--color-background-secondary);
+        }
+        .info-box {
+          background: var(--color-background-info);
+          color: var(--color-text-info);
+          padding: 12px;
+          border-radius: var(--border-radius-md);
+          font-size: 12px;
+          margin-top: 1rem;
+          line-height: 1.6;
+        }
+        .section-title {
+          font-size: 16px;
+          font-weight: 500;
+          margin: 1.5rem 0 1rem;
+        }
+        .thread-meta {
+          font-size: 12px;
+          color: var(--color-text-secondary);
+          margin-bottom: 1.5rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+        }
+        .back-link:hover { color: var(--color-text-primary); }
+    </style>
+</head>
+<body class="obsidian-flow">
+    <div class="qa-container">
+        <a href="reality_matcher_story_feed.html" class="back-link">← Back to feed</a>
+        
+        <div id="content-loading">Loading thread...</div>
+        
+        <div id="main-content" style="display: none;">
+            <!-- Story Reference -->
+            <div class="story-reference">
+                <p class="ref-title" id="ref-title"></p>
+                <p class="ref-subtitle" id="ref-subtitle"></p>
+            </div>
+
+            <!-- Thread info -->
+            <div class="thread-meta" id="thread-meta"></div>
+
+            <div id="qa-threads"></div>
+
+            <!-- ASK ANOTHER QUESTION -->
+            <div class="new-question-section">
+                <p class="new-q-title" id="new-q-title"></p>
+                <textarea class="new-q-input" placeholder="Ask something specific. They respond when they have time."></textarea>
+                <button class="new-q-submit">Post question</button>
+                <div class="info-box" id="info-box"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const personId = urlParams.get('id');
+
+        function init() {
+            if (!personId || !qaData[personId]) {
+                document.getElementById('content-loading').innerText = "Thread not found.";
+                return;
+            }
+
+            const data = qaData[personId];
+            document.title = `Q&A with ${data.personName} | The Unbinding`;
+
+            document.getElementById('ref-title').innerText = `Q&A on: "${data.storyTitle}"`;
+            document.getElementById('ref-subtitle').innerHTML = `<i class="ti ti-user" style="font-size: 12px; margin-right: 4px;" aria-hidden="true"></i> ${data.personName} · ${data.archive}`;
+            document.getElementById('thread-meta').innerHTML = `<i class="ti ti-message-circle-2" style="font-size: 12px; margin-right: 4px;" aria-hidden="true"></i> ${data.stats.count} questions on this story · Updated ${data.stats.lastUpdated}`;
+
+            const threadsContainer = document.getElementById('qa-threads');
+            data.threads.forEach(thread => {
+                const threadDiv = document.createElement('div');
+                threadDiv.className = 'qa-thread';
+                
+                // Question
+                const qMsg = document.createElement('div');
+                qMsg.className = 'qa-message qa-question';
+                qMsg.innerHTML = `
+                    <div class="qa-header">
+                        <div class="qa-author">
+                            <div class="qa-avatar">${thread.question.isUser ? 'You' : thread.question.author[0]}</div>
+                            <div>
+                                <div class="qa-name">${thread.question.author}</div>
+                                <div class="qa-role">${thread.question.time}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qa-text">${thread.question.text}</div>
+                    ${thread.question.isUser ? '<div class="qa-actions"><span style="font-size: 11px; color: var(--color-text-secondary);">You can edit or delete this in the next 24 hours.</span></div>' : ''}
+                `;
+                threadDiv.appendChild(qMsg);
+
+                // Answer
+                const aMsg = document.createElement('div');
+                aMsg.className = 'qa-message qa-answer';
+                aMsg.innerHTML = `
+                    <div class="qa-header">
+                        <div class="qa-author">
+                            <div class="qa-avatar" style="background: var(--color-background-success);">${thread.answer.author.substring(0,2)}</div>
+                            <div>
+                                <div class="qa-name">${thread.answer.author} <span class="mentor-badge">${thread.answer.role}</span></div>
+                                <div class="qa-role">${thread.answer.time}</div>
+                            </div>
+                        </div>
+                        ${thread.answer.isPaid ? '<span class="payment-badge">Paid response</span>' : ''}
+                    </div>
+                    <div class="qa-text">${thread.answer.text}</div>
+                    <div class="qa-actions">
+                        <button class="qa-action-btn"><i class="ti ti-heart" style="font-size: 12px;" aria-hidden="true"></i> Helpful</button>
+                    </div>
+                `;
+                threadDiv.appendChild(aMsg);
+
+                threadsContainer.appendChild(threadDiv);
+            });
+
+            document.getElementById('new-q-title').innerText = `Have another question for ${data.personName}?`;
+            document.getElementById('info-box').innerHTML = `
+                <i class="ti ti-info-circle" style="font-size: 12px; margin-right: 4px;" aria-hidden="true"></i>
+                ${data.personName} gets paid for each response. Your question is visible to everyone.
+            `;
+
+            document.getElementById('content-loading').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        }
+
+        init();
+    </script>
+</body>
+</html>

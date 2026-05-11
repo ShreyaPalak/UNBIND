@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transcript | The Unbinding</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="data.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: var(--font-sans); }
+        .transcript-container { max-width: 680px; margin: 0 auto; padding: 2rem 1rem; }
+        .player-section { 
+          background: var(--color-background-secondary);
+          border: 0.5px solid var(--color-border-tertiary);
+          border-radius: var(--border-radius-lg);
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+        }
+        .player-title { 
+          font-size: 16px; 
+          font-weight: 500; 
+          margin: 0 0 0.5rem;
+        }
+        .player-meta {
+          font-size: 12px;
+          color: var(--color-text-secondary);
+          margin: 0 0 1rem;
+        }
+        .audio-player {
+          width: 100%;
+          height: 40px;
+          margin-bottom: 1rem;
+          border-radius: var(--border-radius-md);
+        }
+        .transcript-section {
+          background: var(--color-background-primary);
+          border: 0.5px solid var(--color-border-tertiary);
+          border-radius: var(--border-radius-lg);
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+        }
+        .section-label {
+          font-size: 11px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          color: var(--color-text-secondary);
+          margin-bottom: 8px;
+          padding-bottom: 8px;
+          border-bottom: 0.5px solid var(--color-border-tertiary);
+        }
+        .transcript-line {
+          margin-bottom: 1.25rem;
+          line-height: 1.7;
+        }
+        .timestamp {
+          display: inline-block;
+          background: var(--color-background-secondary);
+          color: var(--color-text-secondary);
+          font-size: 11px;
+          font-family: var(--font-mono);
+          padding: 2px 6px;
+          border-radius: 3px;
+          margin-right: 8px;
+          cursor: pointer;
+        }
+        .speaker {
+          font-weight: 500;
+          color: var(--color-text-primary);
+          margin-right: 6px;
+        }
+        .pause-marker {
+          color: var(--color-text-tertiary);
+          font-size: 12px;
+          margin: 0.5rem 0;
+          text-align: center;
+          font-style: italic;
+        }
+        .highlight {
+          background: var(--color-background-info);
+          color: var(--color-text-info);
+          padding: 12px;
+          border-radius: var(--border-radius-md);
+          margin: 1rem 0;
+          font-size: 14px;
+          line-height: 1.6;
+        }
+        .chapter-list {
+          background: var(--color-background-secondary);
+          border-radius: var(--border-radius-lg);
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+        }
+        .chapter-title {
+          font-size: 13px;
+          font-weight: 500;
+          margin-bottom: 1rem;
+        }
+        .chapter-item {
+          padding: 12px;
+          background: var(--color-background-primary);
+          border: 0.5px solid var(--color-border-tertiary);
+          border-radius: var(--border-radius-md);
+          margin-bottom: 8px;
+          cursor: pointer;
+          transition: border-color 0.15s;
+        }
+        .chapter-item:hover { border-color: var(--color-border-secondary); }
+        .chapter-time {
+          font-size: 11px;
+          color: var(--color-text-secondary);
+          font-family: var(--font-mono);
+        }
+        .chapter-text {
+          font-size: 13px;
+          color: var(--color-text-primary);
+          margin-top: 4px;
+        }
+        .meta-box {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 12px;
+          margin-top: 1rem;
+        }
+        .meta-item {
+          background: var(--color-background-secondary);
+          padding: 12px;
+          border-radius: var(--border-radius-md);
+          text-align: center;
+        }
+        .meta-label {
+          font-size: 11px;
+          color: var(--color-text-secondary);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+        .meta-value {
+          font-size: 16px;
+          font-weight: 500;
+          color: var(--color-text-primary);
+          margin-top: 4px;
+        }
+        .cta-section {
+          background: var(--color-background-info);
+          color: var(--color-text-info);
+          padding: 1.5rem;
+          border-radius: var(--border-radius-lg);
+          text-align: center;
+          margin-top: 1.5rem;
+        }
+        .cta-button {
+          background: var(--color-text-info);
+          color: var(--color-background-info);
+          border: none;
+          padding: 10px 16px;
+          border-radius: var(--border-radius-md);
+          font-weight: 500;
+          cursor: pointer;
+          margin-top: 12px;
+          transition: opacity 0.15s;
+        }
+        .cta-button:hover { opacity: 0.85; }
+        .tabs {
+          display: flex;
+          gap: 8px;
+          margin-bottom: 1.5rem;
+          border-bottom: 0.5px solid var(--color-border-tertiary);
+        }
+        .tab {
+          background: transparent;
+          border: none;
+          padding: 12px;
+          cursor: pointer;
+          font-size: 13px;
+          color: var(--color-text-secondary);
+          border-bottom: 2px solid transparent;
+          transition: all 0.15s;
+        }
+        .tab.active {
+          color: var(--color-text-primary);
+          border-bottom-color: var(--color-border-primary);
+          font-weight: 500;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+        }
+        .back-link:hover { color: var(--color-text-primary); }
+    </style>
+</head>
+<body class="obsidian-flow">
+    <div class="transcript-container">
+        <a href="reality_matcher_story_feed.html" class="back-link">← Back to feed</a>
+        
+        <div id="content-loading">Loading story...</div>
+        
+        <div id="main-content" style="display: none;">
+            <!-- Header -->
+            <div class="player-section">
+                <p class="player-meta" id="player-meta"></p>
+                <h2 class="player-title" id="player-title"></h2>
+                <p id="player-update-info" style="font-size: 12px; color: var(--color-text-secondary); margin: 8px 0 0;"></p>
+                
+                <audio controls class="audio-player" style="margin-top: 1rem;">
+                    <source src="about:blank" type="audio/mp4">
+                    Your browser does not support audio playback.
+                </audio>
+
+                <div class="meta-box" id="meta-box"></div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('chapters')">Chapters</button>
+                <button class="tab" onclick="switchTab('transcript')">Full Transcript</button>
+                <button class="tab" onclick="switchTab('themes')">Themes & Takeaways</button>
+            </div>
+
+            <!-- CHAPTERS -->
+            <div id="chapters" class="tab-content active">
+                <div class="chapter-list" id="chapter-list">
+                    <div class="chapter-title">Story structure</div>
+                    <!-- Items injected here -->
+                </div>
+            </div>
+
+            <!-- FULL TRANSCRIPT -->
+            <div id="transcript" class="tab-content">
+                <div class="transcript-section">
+                    <div class="section-label">Full transcript (auto-generated, lightly edited)</div>
+                    <div id="transcript-lines"></div>
+                </div>
+            </div>
+
+            <!-- THEMES -->
+            <div id="themes" class="tab-content">
+                <div class="transcript-section">
+                    <div class="section-label">Core themes & what makes this story</div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="margin: 0 0 8px; font-size: 14px; font-weight: 500;">Why this is Archive B (not Archive A)</h4>
+                        <p id="archive-explanation" style="font-size: 13px; color: var(--color-text-primary); line-height: 1.6; margin: 0;"></p>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="margin: 0 0 8px; font-size: 14px; font-weight: 500;">The emotional arc</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;" id="emotional-arc"></div>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="margin: 0 0 8px; font-size: 14px; font-weight: 500;">Extractable wisdom</h4>
+                        <ul id="wisdom-list" style="margin: 0; padding-left: 16px; font-size: 13px; line-height: 1.7; color: var(--color-text-primary);"></ul>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="margin: 0 0 8px; font-size: 14px; font-weight: 500;">Themes tagged by AI</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 6px;" id="themes-tags"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-section">
+                <p style="margin: 0; font-size: 14px;" id="cta-text"></p>
+                <button class="cta-button" id="cta-button">Ask a question</button>
+                <p style="margin: 12px 0 0; font-size: 12px; opacity: 0.9;">Response typically within 2-3 days.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const storyId = urlParams.get('id');
+
+        function init() {
+            if (!storyId || !transcriptData[storyId]) {
+                document.getElementById('content-loading').innerText = "Story not found.";
+                return;
+            }
+
+            const data = transcriptData[storyId];
+            document.title = `${data.name}'s Story | The Unbinding`;
+
+            // Meta
+            document.getElementById('player-meta').innerHTML = `Rohan · ${data.status} · ${data.archive}`;
+            document.getElementById('player-title').innerText = data.title;
+            document.getElementById('player-update-info').innerText = `${data.duration} · Last updated ${data.lastUpdated}`;
+
+            // Stats
+            const metaBox = document.getElementById('meta-box');
+            metaBox.innerHTML = `
+                <div class="meta-item">
+                    <div class="meta-label">Attempts</div>
+                    <div class="meta-value">${data.stats.attempts}</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Years studying</div>
+                    <div class="meta-value">${data.stats.yearsStudying}</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Now</div>
+                    <div class="meta-value">${data.stats.currentStatus}</div>
+                </div>
+            `;
+
+            // Chapters
+            const chapterList = document.getElementById('chapter-list');
+            data.chapters.forEach(ch => {
+                const item = document.createElement('div');
+                item.className = 'chapter-item';
+                item.onclick = () => seekTo(ch.seconds);
+                item.innerHTML = `
+                    <div class="chapter-time">${ch.time}</div>
+                    <div class="chapter-text">${ch.text}</div>
+                `;
+                chapterList.appendChild(item);
+            });
+
+            // Transcript
+            const transcriptLines = document.getElementById('transcript-lines');
+            data.transcript.forEach(line => {
+                if (line.pause) {
+                    const pause = document.createElement('div');
+                    pause.className = 'pause-marker';
+                    pause.innerText = `... [${line.pause}] ...`;
+                    transcriptLines.appendChild(pause);
+                } else {
+                    const lineDiv = document.createElement('div');
+                    lineDiv.className = 'transcript-line';
+                    lineDiv.innerHTML = `
+                        <span class="timestamp">${line.time}</span>
+                        <span class="speaker">${line.speaker}:</span>
+                        <span>${line.text}</span>
+                    `;
+                    transcriptLines.appendChild(lineDiv);
+
+                    if (line.highlight) {
+                        const highlight = document.createElement('div');
+                        highlight.className = 'highlight';
+                        highlight.innerHTML = `<strong>Key moment:</strong> ${line.highlight}`;
+                        transcriptLines.appendChild(highlight);
+                    }
+                }
+            });
+
+            // Themes Tab
+            document.getElementById('archive-explanation').innerText = data.archiveExplanation;
+            
+            const emotionalArc = document.getElementById('emotional-arc');
+            data.emotionalArc.forEach(arc => {
+                const item = document.createElement('div');
+                item.style.background = 'var(--color-background-secondary)';
+                item.style.padding = '12px';
+                item.style.borderRadius = 'var(--border-radius-md)';
+                item.innerHTML = `
+                    <div style="font-size: 11px; color: var(--color-text-secondary); text-transform: uppercase; margin-bottom: 4px;">${arc.act}</div>
+                    <div style="font-size: 13px; font-weight: 500;">${arc.label}</div>
+                    <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 4px;">${arc.text}</div>
+                `;
+                emotionalArc.appendChild(item);
+            });
+
+            const wisdomList = document.getElementById('wisdom-list');
+            data.wisdom.forEach(w => {
+                const li = document.createElement('li');
+                li.innerText = w;
+                wisdomList.appendChild(li);
+            });
+
+            const themeTags = document.getElementById('themes-tags');
+            data.themes.forEach(t => {
+                const tag = document.createElement('div');
+                tag.style.background = 'var(--color-background-info)';
+                tag.style.color = 'var(--color-text-info)';
+                tag.style.padding = '6px 10px';
+                tag.style.borderRadius = 'var(--border-radius-md)';
+                tag.style.fontSize = '12px';
+                tag.innerText = t;
+                themeTags.appendChild(tag);
+            });
+
+            // CTA
+            document.getElementById('cta-text').innerText = `Does this resonate? Ask ${data.name} a question.`;
+            document.getElementById('cta-button').onclick = () => window.location.href = `qa_viewer.html?id=${storyId}`;
+
+            document.getElementById('content-loading').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tab).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function seekTo(seconds) {
+            const audio = document.querySelector('audio');
+            audio.currentTime = seconds;
+            audio.play();
+        }
+
+        init();
+    </script>
+</body>
+</html>
