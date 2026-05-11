@@ -10,36 +10,49 @@
 :root {
     --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     --font-mono: 'Menlo', 'Monaco', 'Courier New', monospace;
-    --color-text-primary: #1a1a1a;
-    --color-text-secondary: #666666;
-    --color-text-tertiary: #999999;
-    --color-text-info: #0066cc;
-    --color-text-success: #22863a;
-    --color-background-primary: #ffffff;
-    --color-background-secondary: #f5f5f5;
-    --color-background-info: #e8f1ff;
-    --color-border-primary: #e0e0e0;
-    --color-border-secondary: #d0d0d0;
-    --color-border-tertiary: #cccccc;
-    --color-border-info: #0066cc;
-    --border-radius-lg: 12px;
-    --border-radius-md: 8px;
+    --color-text-primary: #e8e4d9;
+    --color-text-secondary: #a89f90;
+    --color-text-tertiary: #7a7366;
+    --color-text-info: #9db4ff;
+    --color-text-success: #6bc76b;
+    --color-background-primary: rgba(20, 15, 28, 0.7);
+    --color-background-secondary: rgba(35, 28, 48, 0.5);
+    --color-background-info: rgba(157, 180, 255, 0.1);
+    --color-border-primary: rgba(232, 228, 217, 0.15);
+    --color-border-secondary: rgba(168, 159, 144, 0.2);
+    --color-border-tertiary: rgba(122, 115, 102, 0.25);
+    --color-border-info: rgba(157, 180, 255, 0.3);
+    --border-radius-lg: 16px;
+    --border-radius-md: 10px;
 }
 
         * { box-sizing: border-box; }
-        body { font-family: var(--font-sans); margin: 0; padding: 0; background: #fafafa; }
-        .transcript-container { max-width: 680px; margin: 0 auto; padding: 2rem 1rem; }
+        body { font-family: var(--font-sans); margin: 0; padding: 0; background: #0a0810; position: relative; }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="2" /></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.08"/></svg>');
+            pointer-events: none;
+            z-index: 1;
+        }
+        .transcript-container { max-width: 680px; margin: 0 auto; padding: 2rem 1rem; position: relative; z-index: 2; }
         .player-section { 
           background: var(--color-background-secondary);
-          border: 0.5px solid var(--color-border-tertiary);
+          border: 1px solid var(--color-border-tertiary);
           border-radius: var(--border-radius-lg);
           padding: 1.5rem;
           margin-bottom: 1.5rem;
+          backdrop-filter: blur(10px);
         }
         .player-title { 
           font-size: 16px; 
           font-weight: 500; 
           margin: 0 0 0.5rem;
+          color: var(--color-text-primary);
         }
         .player-meta {
           font-size: 12px;
@@ -54,10 +67,11 @@
         }
         .transcript-section {
           background: var(--color-background-primary);
-          border: 0.5px solid var(--color-border-tertiary);
+          border: 1px solid var(--color-border-tertiary);
           border-radius: var(--border-radius-lg);
           padding: 1.5rem;
           margin-bottom: 1.5rem;
+          backdrop-filter: blur(10px);
         }
         .section-label {
           font-size: 11px;
